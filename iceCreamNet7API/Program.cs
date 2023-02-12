@@ -33,6 +33,69 @@ app.MapGet("/GetData", async (HttpClient _httpClient) =>
     return Results.Ok(allIceCreams);
 });
 
+app.MapGet("/GB", async (HttpClient _httpClient) =>
+{
+    var response = await _httpClient.GetAsync(url + "/allicecreams");
+
+    if (!response.IsSuccessStatusCode)
+    {
+        Console.WriteLine("Error");
+        return Results.NotFound("Url not found.");
+    }
+
+    var data = await response.Content.ReadAsStringAsync();
+    var allIceCreams = JsonConvert.DeserializeObject<List<IceCreamData>>(data).FindAll(x=>x.Company.Contains("gb",StringComparison.OrdinalIgnoreCase));
+    return Results.Ok(allIceCreams);
+});
+
+
+app.MapGet("/BJ", async (HttpClient _httpClient) =>
+{
+    var response = await _httpClient.GetAsync(url + "/allicecreams");
+
+    if (!response.IsSuccessStatusCode)
+    {
+        Console.WriteLine("Error");
+        return Results.NotFound("Url not found.");
+    }
+
+    var data = await response.Content.ReadAsStringAsync();
+    var allIceCreams = JsonConvert.DeserializeObject<List<IceCreamData>>(data).FindAll(x => x.Company.Contains("ben & jerry", StringComparison.OrdinalIgnoreCase));
+    return Results.Ok(allIceCreams);
+});
+
+app.MapGet("/Triumph", async (HttpClient _httpClient) =>
+{
+    var response = await _httpClient.GetAsync(url + "/allicecreams");
+
+    if (!response.IsSuccessStatusCode)
+    {
+        Console.WriteLine("Error");
+        return Results.NotFound("Url not found.");
+    }
+
+    var data = await response.Content.ReadAsStringAsync();
+    var allIceCreams = JsonConvert.DeserializeObject<List<IceCreamData>>(data).FindAll(x => x.Company.Contains("Triumph", StringComparison.OrdinalIgnoreCase));
+    return Results.Ok(allIceCreams);
+});
+
+
+app.MapGet("/lohilo", async (HttpClient _httpClient) =>
+{
+    var response = await _httpClient.GetAsync(url + "/allicecreams");
+
+    if (!response.IsSuccessStatusCode)
+    {
+        Console.WriteLine("Error");
+        return Results.NotFound("Url not found.");
+    }
+
+    var data = await response.Content.ReadAsStringAsync();
+    var allIceCreams = JsonConvert.DeserializeObject<List<IceCreamData>>(data).FindAll(x => x.Company.Contains("lohilo", StringComparison.OrdinalIgnoreCase));
+    return Results.Ok(allIceCreams);
+});
+
+
 app.MapGet("/GetByIDData", async (HttpClient _httpClient, int id) =>
 {
     var response = await _httpClient.GetAsync(url + "/allicecreams/icecream/" + id);
