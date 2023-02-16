@@ -48,6 +48,21 @@ app.MapGet("/GetByCompanyName", async (HttpClient _httpClient,string CompanyName
     return Results.Ok(allIceCreams);
 });
 
+app.MapGet("/GetByName", async (HttpClient _httpClient, string Name) =>
+{
+    var response = await _httpClient.GetAsync(url + "/allicecreams");
+
+    if (!response.IsSuccessStatusCode)
+    {
+        Console.WriteLine("Error");
+        return Results.NotFound("Url not found.");
+    }
+
+    var data = await response.Content.ReadAsStringAsync();
+    var allIceCreams = JsonConvert.DeserializeObject<List<IceCreamData>>(data).First(x => x.Name.Contains(Name, StringComparison.OrdinalIgnoreCase));
+    return Results.Ok(allIceCreams);
+});
+
 
 app.MapGet("/GetByIDData", async (HttpClient _httpClient, int id) =>
 {
