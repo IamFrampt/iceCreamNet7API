@@ -22,8 +22,6 @@ app.MapGet("/GetData", async (HttpClient _httpClient) =>
 {
     var response = await _httpClient.GetAsync(url + "/allicecreams");
 
-    //HEJ
-
     if (!response.IsSuccessStatusCode)
     {
         Console.WriteLine("Error");
@@ -136,17 +134,6 @@ public class AddIceCreamData
     public string Company { get; set; }
     public nutritionalContent nutritionalContent { get; set; }
 }
-
-
-public class golf
-{
-    public string coursename { get; set; }
-    public string country { get; set; }
-    public string city { get; set; }
-    public string distance { get; set; }
-    public string par { get; set; }
-}
-
 
 public class nutritionalContent
 {
