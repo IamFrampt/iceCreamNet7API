@@ -9,18 +9,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
+                      builder =>
                       {
-                          policy.WithOrigins("https://Icecreamsapi.azurewebsites.net");
+                          builder.WithOrigins(url,
+                              "https://icelabb.azurewebsites.net");
                       });
 });
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 var app = builder.Build();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(builder => builder
+ .AllowAnyOrigin()
+ .AllowAnyMethod()
+ .AllowAnyHeader()
+ .AllowCredentials());
 
 
 // Configure the HTTP request pipeline.
@@ -77,7 +84,6 @@ app.MapGet("/GetByName", async (HttpClient _httpClient, string Name) =>
     return Results.Ok(allIceCreams);
 });
 
-
 app.MapGet("/GetByIDData", async (HttpClient _httpClient, int id) =>
 {
     var response = await _httpClient.GetAsync(url + "/allicecreams/icecream/" + id);
@@ -92,7 +98,6 @@ app.MapGet("/GetByIDData", async (HttpClient _httpClient, int id) =>
     var iceCreamByID = JsonConvert.DeserializeObject<IceCreamData>(data);
     return Results.Ok(iceCreamByID);
 });
-
 
 app.MapPost("/AddData", async (HttpClient httpClient, AddIceCreamData iceCream) =>
 {
