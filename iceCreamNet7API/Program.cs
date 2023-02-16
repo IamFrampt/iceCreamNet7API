@@ -2,11 +2,25 @@ using Newtonsoft.Json;
 
 string url = "https://icecreamsapi.azurewebsites.net";
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://Icecreamsapi.azurewebsites.net");
+                      });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 var app = builder.Build();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 
 // Configure the HTTP request pipeline.
