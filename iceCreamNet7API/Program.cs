@@ -22,6 +22,8 @@ app.MapGet("/GetData", async (HttpClient _httpClient) =>
 {
     var response = await _httpClient.GetAsync(url + "/allicecreams");
 
+    //HEJ
+
     if (!response.IsSuccessStatusCode)
     {
         Console.WriteLine("Error");
