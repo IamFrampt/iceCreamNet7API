@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-string url = "http://icecreamsapi.azurewebsites.net";
+string url = "https://icecreamsapi.azurewebsites.net";
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
